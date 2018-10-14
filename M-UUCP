@@ -1,0 +1,41 @@
+# This file creates the UUCP-RA.EXE program.
+# Copyright (c) 1992, 1993, 1994 Fredric L. Rice
+#
+# The MODEL variable is used to describe
+# the memory model to use.
+#
+# Compiler SWITCHES:
+#    -G 	Generate for speed rather than size
+#    -O 	Optimizes jumps
+#    -d 	Merge duplicate strings
+#    -Z 	This would optimize registers
+#    -K		Default char is considered unsigned
+#    -g1        Stop after first warning
+#    -j1	Stop after first error
+#    -w         Enable all warnings
+#    -Ixxx      Include files directory
+#    -Lxxx      Libraries directory
+#    -N         Check stack overflow
+#    -c         Compile only
+#    -mx        Set Memory Model
+
+
+MODEL = l
+
+SWITCHES1 = -Ic:\tc\include -G -O -d -Z -K -g1 -j1 -w -N
+
+# Describe the files that are used to
+# create the executable module.
+
+uucp-ra.exe : uucp-ra.obj
+
+# Here is the command to execute if
+# uucp-ra.exe needs to be linked.
+
+     tlink /x /i @uucp-ra.res
+
+# The following are the commands that create the object module
+
+uucp-ra.obj : uucp-ra.c
+     tcc -c $(SWITCHES1) -m$(MODEL) uucp-ra.c
+

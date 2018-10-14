@@ -1,0 +1,99 @@
+Version 1.3 -
+        If there us no To: address kludge, the message is returned
+        to the User with a Sub: header that indicates that the
+        message was not delivered.
+
+        The "To: " kludge is validated... The T must be uppercase
+        and the o must be lowercase, the : must have a space after
+        it. If any of these fail to be found, the software will
+        set the "To: " kludge properly and all is well.
+
+        Added the "kludge" keywork to keep from putting the INTL,
+        MSGID, FMPT, and TOPT kludges in the outbound *.MSG files.
+
+        All of the To: kludges found in the message are moved to
+        the top of the message. This is done by reading-in the
+        entire message into a linked list, setting the To: lines
+        at the top of the list, and then re-writing it all out.
+
+Version 1.4 -
+        Two command-line options were added to speed-up processing.
+
+            /toss - A command-line option of /toss will only
+            review the inbound *.MSG messages in the network
+            mail directory and toss them to the Remote
+            Access/QBBS Data base.
+
+            /scan A command-line option of /scan will only scan
+            the Remote Access/QBBS data base for outbound mail
+            and will toss them to the network mail directory.
+
+        If you use both /toss _AND_ /scan, nothing will be done.
+
+Version 1.5 -
+        Removed the setting of the crash bit in the outbound *.MSG
+        message files.  The setting of this bit was not a valid
+        way of creating the usual attribute byte.
+
+Version 1.6 -
+        Setting the CRASH bit is configured now rather than either set
+        on or off upon the programmers whim.
+
+        The /list and /listall commands didn't recognize regional
+        nodes so that caused problems with the reports it would produce
+        on known gateways.  This version will now treat regional nodes
+        as if they were network nodes for the listing of gates.  It
+        also didn't recognize badly formatted gateway flags in the
+        nodelist (specifically, lower-cased flags.)
+
+        We now have one inbound folder and any number of outbound mail
+        folders.  To have the inbound folder also be scanned for any
+        outbound mail you must include the inbound mail folder number
+        in with the list of outbound mail folders.
+
+Version 1.7 -
+        The "echo" aspects of the project were started with this version
+        and never released.  Messages received are automatically sent back
+        to the system configured with the "GATE" command in the
+        configuration file.
+
+Version 1.8 -
+        The source code contained unused variables and variables which
+        loss precision on the stack.  These were cleaned-up and the
+        comments within the code was reviewed and made more accurate as
+        needed.
+
+        If the FidoNet kludges are to be added (by being enabled through
+        the configuration file command) the INTL kludge is added
+        reguardless of whether the zone of the originating system is
+        different from the zone of the destination system.  Previous
+        versions would only include the INTL kludge if the zones were
+        different.
+
+        The new configuration element called 'kill' was added.  In the
+        configuration file, if you want your outbound Internet *.MSG
+        message files to be deleted after they are successfully sent to
+        your host by your mailer, mark the configuration element YES
+        (which is the default.)  If you want the message to stick around
+        even after it has been transmitted, mark this configuration
+        element NO.
+
+        A new errorlevel is returned if the kill configuration item is
+        not configured for either YES or NO.
+
+        The /list and /listall commands don'tgo to the screen any more.
+        The output report file UUCP-RA.LST gets written to with the
+        information about UUCP Gateways in the nodelist.
+
+        A new errorlevel is returned if the file can't be created.
+
+Version 1.9 -
+        Some messages from UUCO hosts do not create a 'from' or 'By:'
+        line in the header with the first four characters being the
+        letters "UUCP" and because of this, mail from UUCP has not been
+        selected for import into the Remote Access folder.
+
+        This new version will search for the word "UUCP" anywhere in
+        the 'By' or 'from' field of the *.MSG message file and if it
+        finds it, will consider the message to be from UUCP.
+
